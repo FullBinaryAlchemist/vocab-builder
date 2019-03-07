@@ -14,7 +14,7 @@ class List(models.Model):
         return self.list_name
 
 
-class WordList(models.Model)
+class WordList(models.Model):
     word = models.CharField(max_length=30)
     definition = models.CharField(max_length=200)
     word_id = models.CharField(max_length=100, primary_key=True)
