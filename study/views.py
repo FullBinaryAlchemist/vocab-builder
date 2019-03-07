@@ -1,11 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
+
+
 # Create your views here.
 
-def learn(request):
+def tohome(request):
+	return redirect('home')
 
-	#learn_words = 
-	context={
-		'learn_words':'a' 
+
+def home(request):
+	list_type = List.objects.all()
+	context = {
+		'list_type': list_type,
 	}
-	return render(request, 'study/base.html', context)
+	return render(request, 'study/home.html', context)
+
+
+def learn(request):
+    # learn_words =
+    context = {
+        'learn_words': 'a'
+    }
+    return render(request, 'study/base.html', context)
