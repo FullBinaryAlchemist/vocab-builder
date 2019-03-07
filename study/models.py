@@ -5,11 +5,11 @@ from django.utils import timezone
 
 #class Study(models.Model):
 
-class WordType(models.Model):
-	word_type = models.CharField(max_length=10)
+class List(models.Model):
+	list_type = models.CharField(max_length=10)
 
 	def __str__(self):
-		return self.word_type
+		return self.list_type
 
 
 class WordList(models.Model):
