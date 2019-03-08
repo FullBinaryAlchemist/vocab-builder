@@ -4,16 +4,16 @@ from .models import *
 
 # Create your views here.
 
-def tohome(request):
-	return redirect('home')
+def tostudy(request):
+	return redirect('study')
 
 
-def home(request):
+def study(request):
 	list_type = List.objects.all()
 	context = {
 		'list_type': list_type,
 	}
-	return render(request, 'study/home.html', context)
+	return render(request, 'study/study.html', context)
 
 
 def learn(request):
