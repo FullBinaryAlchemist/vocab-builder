@@ -6,20 +6,19 @@ from django.utils import timezone
 #class Study(models.Model):
 
 class List(models.Model):
-	list_type = models.CharField(max_length=10)
+    list_type = models.CharField(max_length=10)
 
-	def __str__(self):
-		return self.list_type
+    def __str__(self):
+        return self.list_type
 
 
 class WordList(models.Model):
-	word= models.CharField(max_length=30)
-	definition= models.CharField(max_length=200)
-	word_id=models.CharField(max_length=100,primary_key=True)
+    word = models.CharField(max_length=30)
+    definition = models.CharField(max_length=200)
+    word_id = models.CharField(max_length=100, primary_key=True)
 
-	def __str__(self):
-		return self.word_id
-	
+    def __str__(self):
+        return self.word_id
 
 class ProgressManager(models.Manager):
 	def get_lwords(self,user_name,list):

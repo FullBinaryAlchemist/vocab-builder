@@ -3,6 +3,10 @@ from . import views
 
 urlpatterns = [
 
-	#/study/learn/
+	# vocabuilder/ or vocabuilder/study
+	path('', views.tostudy, name='tostudy'),
+	path('study/', views.study, name='study'),
+
+	# vocabuilder/study/learn/
 	path('learn/', views.learn, name='learn'),
 ]
