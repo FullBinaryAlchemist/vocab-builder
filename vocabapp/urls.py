@@ -21,5 +21,6 @@ from study import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('study/',include(urls)),
+    # 'vocabuilder/'
+    path('vocabuilder/', include(urls)),
 ]
