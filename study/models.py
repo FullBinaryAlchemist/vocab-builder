@@ -5,11 +5,11 @@ from django.utils import timezone
 
 #class Study(models.Model):
 
-class WordType(models.Model):
-	word_type = models.CharField(max_length=10)
+class List(models.Model):
+	list_type = models.CharField(max_length=10)
 
 	def __str__(self):
-		return self.word_type
+		return self.list_type
 
 
 class WordList(models.Model):
@@ -21,6 +21,31 @@ class WordList(models.Model):
 		return self.word_id
 	
 
+class ProgressManager(models.Manager):
+	def get_lwords(self,user_name,list):
+		a=models.Q(word_id__word_id__contains=list) 
+		b=models.Q(user=user_name)
+		c=models.Q(learned=True)
+		return self.filter(a&b&c)
+	
+	def get_review_words(self, user_name, list):
+		current_time= timezone.now
+		a=models.Q(word_id__word_id__contains=list) 
+		b=models.Q(user=user_name)
+		c=models.Q(learned=False)
+		
+		return self.filter(a&b&c).filter(interval__lte=current_time())
+
+	def get_total_words_count(self,list):
+		return self.filter(word_id__word_id__contains=list).count()
+
+	def get_unwords_count(self,user_name,list):
+		count =get_lwords_by_user(self,user_name,list).count()
+		total= get_total_words_count(self,list)
+
+		return (total-count)
+
+
 
 class Progress(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -29,6 +54,8 @@ class Progress(models.Model):
 	correct=models.IntegerField(default=0)
 	wrong=models.IntegerField(default=0)
 	interval= models.DateTimeField(default=timezone.now)
-
+	objects= ProgressManager()
 	def __str__(self):
-		return str((word_id,learned,correct,wrong))
+		return str((self.word_id,self.learned,self.correct,self.wrong))
+
+	
