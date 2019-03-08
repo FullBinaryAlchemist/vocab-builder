@@ -21,12 +21,8 @@ from dashboard import urls as dashboard_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-<<<<<<< HEAD
-    path('study/',include(urls)),
-
     path('dashboard/',include(dashboard_urls)),
-=======
     # 'vocabuilder/'
     path('vocabuilder/', include(urls)),
->>>>>>> master
+
 ]
