@@ -10,5 +10,10 @@
 	<!--TO-DO-->
 	<div id="study-history"></div>
 	<!--TO-DO-->
-	<div id="test-history"></div>
+	<h3 align="center">TESTS</h3>
+	<div id="test-history">
+		{%for test in tests %}
+			{% show_test_history test %}
+		{% endfor %}
+	</div>
 {% endblock content %}
