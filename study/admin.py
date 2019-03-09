@@ -6,5 +6,3 @@ from .models import *
 admin.site.register(WordList)
 admin.site.register(Progress)
 admin.site.register(List)
-admin.site.register(TestData)
-admin.site.register(Test)
