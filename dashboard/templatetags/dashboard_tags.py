@@ -1,7 +1,8 @@
 from django import template
 
 from study.models import *
-
+from dashboard.models import *
+from django.db.models import Q
 register= template.Library()
 
 @register.simple_tag
@@ -16,9 +17,9 @@ def show_progress(user,list):
 	return {'list':list,'lwc':learned_words_c,'twc':total_words_c,'rwc': review_words_c} 
 
 @register.inclusion_tag("dashboard/test.html")
-def show_test_history(test):
+def show_test_history(user,test):
 	test_id= test.test_data.test_id
-	total_words= test.test_data.objects.filter(test_id=test_id).count()
+	total_words= TestsData.objects.filter(Q(test_id=test_id) & Q(user=user)).count()
 	score= test.getscore()
 	date=test.test_date.strftime("%Y-%m-%d %H:%M:%S")
 	return {'test_id':test_id,'date':date,'twc':total_words,'sc': score} 

@@ -6,7 +6,8 @@ class TestsData(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	word_id= models.ForeignKey(WordList,on_delete=models.CASCADE)
 	right= models.BooleanField(default=False)
-	
+	def __str__(self):
+		return str((self.test_id,self.user,self.word_id,self.right))
 	class Meta:
 		managed=True
 		#	db_table='study_testdata'
@@ -18,9 +19,8 @@ class Tests(models.Model):
 	class Meta:
 		managed=True
 		#db_table="study_test"
-
+	def __str__(self):
+		return str((self.test_data.test_id,self.test_date, self.test_data.user))
 	def getscore(self):
-		return self.test_data.objects.filter(right=True).count()
-
-
+		return TestsData.objects.filter(models.Q(right=True) & models.Q(user=self.test_data.user) & models.Q(test_id=self.test_data.test_id)).count()
 # Create your models here.
