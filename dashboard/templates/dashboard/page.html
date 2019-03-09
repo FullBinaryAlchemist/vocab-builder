@@ -1,6 +1,7 @@
 {% extends "./base.html" %}
 {% load dashboard_tags %}
 {% block content %}
+	<h3 align="center">PROGRESS</h3>
 	<div id="progress">
 		{%for list in lists %}
 			{% show_progress user list.list_type %}
