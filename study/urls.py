@@ -8,5 +8,5 @@ urlpatterns = [
 	path('study/', views.study, name='study'),
 
 	# vocabuilder/study/learn/
-	path('learn/', views.learn, name='learn'),
+	path('study/learn/', views.learn, name='learn'),
 ]
