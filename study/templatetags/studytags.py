@@ -1,6 +1,7 @@
 from django.template.defaultfilters import register
+from study.models import *
 
 
-@register.filter(name='get_value')
-def get_value(tot_words, key):
-    return tot_words.get(str(key))  # since type(key)=<class 'study.models.List'>
+@register.simple_tag(name='get_value')
+def get_value(cat):
+    return  WordList.objects.filter(word_id__contains=cat).count()

@@ -1,1 +1,24 @@
 {% extends 'study/base.html' %}
+
+{% block content %}
+{% load studytags %}
+<form method="POST" action="{% url 'learn' %}">{% csrf_token %}
+
+<label class="category"><strong>Category</strong></label>
+<label class="review"><strong>Review</strong></label>
+<label class="progress"><strong>Progress</strong></label><br><br>
+
+{% for category in categories %}
+    <label class="categories">{{ category }}</label>
+    <label class="tot-review-que">{{ tot_review_que }}</label>
+    <label class="words-learned">{{ words_learned }}/{% get_value category %}</label>
+    <button type="submit" class="review-btn" value="{{ category }}">Review</button>
+    <button name="category" type="submit" class="learn-btn" value="{{ category }}">Learn</button>
+    <br>
+
+{% endfor %}
+
+
+</form>
+
+{% endblock %}
