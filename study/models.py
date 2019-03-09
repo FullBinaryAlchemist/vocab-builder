@@ -75,5 +75,5 @@ class Test(models.Model):
 	test_date= models.DateTimeField(default=timezone.now)
 
 	def getscore(self):
-		return self.test.objects.filter(right=True).count()
+		return self.test_data.objects.filter(right=True).count()
 
