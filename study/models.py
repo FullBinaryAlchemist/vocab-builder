@@ -3,7 +3,8 @@ from django.db import models
 from django.utils import timezone
 # Create your models here.
 
-#class Study(models.Model):
+# class Study(models.Model):
+
 
 class List(models.Model):
     list_type = models.CharField(max_length=10)
@@ -23,11 +24,11 @@ class WordList(models.Model):
 
 class Progress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    word_id= models.ForeignKey(WordList,on_delete=models.CASCADE)
-    learned= models.BooleanField(default=False)
-    correct=models.IntegerField(default=0)
-    wrong=models.IntegerField(default=0)
-    interval= models.DateTimeField(default=timezone.now)
+    word_id = models.ForeignKey(WordList,on_delete=models.CASCADE)
+    learned = models.BooleanField(default=False)
+    correct = models.IntegerField(default=0)
+    wrong = models.IntegerField(default=0)
+    interval = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return str((self.word_id,self.learned,self.correct,self.wrong))
+        return str((self.word_id, self.learned, self.correct, self.wrong))
