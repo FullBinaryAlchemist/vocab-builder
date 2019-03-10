@@ -8,6 +8,7 @@ class TestsData(models.Model):
 	right= models.BooleanField(default=False)
 	def __str__(self):
 		return str((self.test_id,self.user,self.word_id,self.right))
+
 	class Meta:
 		managed=True
 		#	db_table='study_testdata'
