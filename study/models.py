@@ -43,10 +43,10 @@ class ProgressManager(models.Manager):
         return self.filter(word_id__word_id__contains=list).count()
 
     def get_unwords_count(self, user_name, list):
-        count = get_lwords_by_user(self, user_name, list).count()
-        total = get_total_words_count(self, list)
+        count = self.get_lwords(self, user_name, list).count()
+        total = self.get_total_words_count(self, list)
 
-        return (total - count)
+        return total - count
 
 
 class Progress(models.Model):
@@ -67,19 +67,3 @@ class Progress(models.Model):
 def assign_test_id():
 		return Test.objects.all().count()+1	
 '''
-
-
-class TestData(models.Model):
-    test_id = models.IntegerField(default=1)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    word_id = models.ForeignKey(WordList, on_delete=models.CASCADE)
-    right = models.BooleanField(default=False)
-
-
-class Test(models.Model):
-    test_data = models.ForeignKey(TestData, on_delete=models.CASCADE)
-    test_date = models.DateTimeField(default=timezone.now)
-
-    def getscore(self):
-        return self.test_data.objects.filter(right=True).count()
-

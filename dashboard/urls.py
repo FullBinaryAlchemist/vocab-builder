@@ -4,6 +4,6 @@ from django.urls import path
 from testmode.views import info
 # Create your views here.
 urlpatterns = [
-	path("",dashboard_view,name="dashboard"),
-	path("info/<int:test_id>",info_redirect,name="info_redirect")
+	path("", dashboard_view, name="dashboard"),
+	path("info/<int:test_id>", info_redirect, name="info_redirect")
 ]

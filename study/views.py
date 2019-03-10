@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -13,13 +14,13 @@ def study(request):
 	categories = List.objects.all()
 
 	# get learned words
-	words_learned = 0
+	tot_words_learned = Progress.objects.get_lwords(request.user.username, categories).count()
 
 	# get no. of ques remained for reviewing
-	tot_review_que = 0
+	tot_review_que = Progress.objects.get_review_words(request.user.username, categories).count()
 
 	context = {
-		'categories': categories, 'words_learned': words_learned, 'tot_review_que': tot_review_que,
+		'categories': categories, 'tot_words_learned': tot_words_learned, 'tot_review_que': tot_review_que,
 	}
 	return render(request, 'study/study.html', context)
 
