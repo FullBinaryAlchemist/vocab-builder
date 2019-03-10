@@ -1,6 +1,7 @@
+
 <div id="{{test_id}}">
-	<div><h3>{{test_id}}</h3></div>
-	<div>Score:{{sc}}/{{tw}}</div>
+	<div><h4><a href="{% url 'info_redirect' test_id %}">{{test_id}}</a></h4></div>
+	<div>Score:{{sc}}/{{twc}}</div>
 	<div>Date: {{date}}</div>
 	
 </div>

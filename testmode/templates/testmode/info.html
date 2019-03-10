@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+{% block content %}
+	<h3 align="center"> Test {{test_id}} </h3>
+	<div><p>Date: {{date}}</p></div>
+	<ol>
+	{% for word in all_words %}
+		<li> {{word.word_id.word}} {{word.right}}</li>
+	{% endfor %}
+	</ol>
+{% endblock content %}

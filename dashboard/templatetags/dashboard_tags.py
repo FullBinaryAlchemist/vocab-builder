@@ -1,9 +1,7 @@
 from django import template
-
 from study.models import *
 
 register = template.Library()
-
 
 @register.simple_tag
 def total_words(list):

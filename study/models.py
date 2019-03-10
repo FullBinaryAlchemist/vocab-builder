@@ -82,3 +82,4 @@ class Test(models.Model):
 
     def getscore(self):
         return self.test_data.objects.filter(right=True).count()
+
