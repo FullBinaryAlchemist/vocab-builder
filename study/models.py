@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -51,7 +51,7 @@ class ProgressManager(models.Manager):
 
 class Progress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    word_id = models.ForeignKey(WordList, on_delete=models.CASCADE)
+    word_id = models.ForeignKey(WordList, on_delete=models.CASCADE, null=True)
     learned = models.BooleanField(default=False)
     correct = models.IntegerField(default=0)
     wrong = models.IntegerField(default=0)
@@ -81,4 +81,4 @@ class Test(models.Model):
     test_date = models.DateTimeField(default=timezone.now)
 
     def getscore(self):
-        return self.test.objects.filter(right=True).count()
+        return self.test_data.objects.filter(right=True).count()

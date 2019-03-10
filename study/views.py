@@ -30,11 +30,11 @@ def learn(request):
 		# get selected category
 		selected_cat = request.POST['category']
 
-		# get words to learn
-		words = 'a'
+		# get words to learn in terms of objects
+		learn_words = 'a'#WordList.objects.get(word='abate')
 
 		context = {
-			'words': words, 'selected_cat': selected_cat,
+			'learn_words': learn_words, 'selected_cat': selected_cat,
 		}
 		return render(request, 'study/learn.html', context)
 	else:
@@ -42,9 +42,17 @@ def learn(request):
 
 
 def review(request):
-	# learn_words =
-	context = {
-		'learn_words': 'a'
-	}
-	return render(request, 'study/learn.html', context)
+	if request.method == 'POST':
+		# get selected category
+		selected_cat = request.POST['category']
+
+		# get words to review
+		review_words = 'a'
+
+		context = {
+			'words': review_words, 'selected_cat': selected_cat,
+		}
+		return render(request, 'study/learn.html', context)
+	else:
+		return redirect('study')
 

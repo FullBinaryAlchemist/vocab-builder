@@ -18,10 +18,11 @@ from django.urls import path
 from django.urls import include
 from study import urls
 from dashboard import urls as dashboard_urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('dashboard/',include(dashboard_urls)),
+    path('dashboard/', include(dashboard_urls)),
     # 'vocabuilder/'
     path('vocabuilder/', include(urls)),
 
