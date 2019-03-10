@@ -12,38 +12,36 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('study', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='List',
+            name='Tests',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('list_type', models.CharField(max_length=10)),
+                ('test_date', models.DateTimeField(default=django.utils.timezone.now)),
             ],
+            options={
+                'managed': True,
+            },
         ),
         migrations.CreateModel(
-            name='Progress',
+            name='TestsData',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('learned', models.BooleanField(default=False)),
-                ('correct', models.IntegerField(default=0)),
-                ('wrong', models.IntegerField(default=0)),
-                ('interval', models.DateTimeField(default=django.utils.timezone.now)),
+                ('test_id', models.IntegerField(default=1)),
+                ('right', models.BooleanField(default=False)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('word_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='study.WordList')),
             ],
-        ),
-        migrations.CreateModel(
-            name='WordList',
-            fields=[
-                ('word', models.CharField(max_length=30)),
-                ('definition', models.CharField(max_length=200)),
-                ('word_id', models.CharField(max_length=100, primary_key=True, serialize=False)),
-            ],
+            options={
+                'managed': True,
+            },
         ),
         migrations.AddField(
-            model_name='progress',
-            name='word_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='study.WordList'),
+            model_name='tests',
+            name='test_data',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dashboard.TestsData'),
         ),
     ]
