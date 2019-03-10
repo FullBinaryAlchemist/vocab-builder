@@ -39,7 +39,7 @@ class ProgressManager(models.Manager):
 		return self.filter(word_id__word_id__contains=list).count()
 
 	def get_unwords_count(self,user_name,list):
-		count =get_lwords_by_user(self,user_name,list).count()
+		count =get_lwords(self,user_name,list).count()
 		total= get_total_words_count(self,list)
 
 		return (total-count)
