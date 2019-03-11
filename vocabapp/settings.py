@@ -25,7 +25,7 @@ SECRET_KEY = '#v!u^i#ex8l19o^r88(km=h^lio0dtk9az5jbws+5_g7e1d98b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'testmode',
     'study',
     'dashboard',
+    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

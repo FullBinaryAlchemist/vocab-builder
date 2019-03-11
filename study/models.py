@@ -25,19 +25,29 @@ class WordList(models.Model):
 
 
 class ProgressManager(models.Manager):
+
+    learn_q = 5
+
     def get_lwords(self, user_name, list):
+        # print(user_name, list)
         a = models.Q(word_id__word_id__contains=list)
-        b = models.Q(user=user_name)
+        b = models.Q(user__username=user_name)
         c = models.Q(learned=True)
         return self.filter(a & b & c)
 
     def get_review_words(self, user_name, list):
         current_time = timezone.now
         a = models.Q(word_id__word_id__contains=list)
-        b = models.Q(user=user_name)
+        b = models.Q(user__username=user_name)
         c = models.Q(learned=False)
-
         return self.filter(a & b & c).filter(interval__lte=current_time())
+
+    def get_unwords(self, user_name, list):
+        review_words = self.get_review_words(user_name, list).values_list('word_id__word', flat=True)
+        l_words = self.get_lwords(user_name, list).values_list('word_id__word', flat=True)
+        wordlist_words = WordList.objects.filter(word_id__contains=list)
+        unl_words = wordlist_words.exclude(word__in=review_words.union(l_words))[:self.learn_q]
+        return unl_words
 
     def get_total_words_count(self, list):
         return self.filter(word_id__word_id__contains=list).count()
