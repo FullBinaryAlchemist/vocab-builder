@@ -91,7 +91,7 @@ def set_word_progress(review_words, is_correct):
         progress_word.save()
         if progress_word.correct == 3:
             progress_word.learned = True
-        progress_word.interval = timezone.now() + timedelta(seconds=10)
+        progress_word.interval = timezone.now() + timedelta(hours=1)
         progress_word.save()
     else:
         progress_word.wrong += 1
