@@ -1,41 +1,62 @@
 {% extends 'study/base.html' %}
 
 {% block content %}
-{% load mathfilters %}
-{% load studytags %}
+{% load reviewtags mathfilters %}
 <h2>Review</h2>
-<!--{% if r_word_num == review_words.count %}
-    <form method="POST" action="{% url 'study' 0 %}">{% csrf_token %}
+{% if review_words.count %}
+    <form method="POST" id="form_data" action="{% url 'review' r_word_num|add:1 %}">{% csrf_token %}
         <div>
-            <label>{{ review_words|get_word:r_word_num }}</label>
+            <label>{% get_re_def review_words %}</label>
         </div>
+            <input type="text" value="" id="word_txt">
         <div>
-            <label>{{ review_words|get_def:r_word_num }}</label>
+            <button type="button" value="" id="button" onclick="checkAns()">Submit</button>
+            <button type="submit" name="user_word_data" value="" id="next" disabled>Next</button>
         </div>
-        <div>
-            <button type="submit" value="{{ category }}" name="category">Next</button>
-        </div>
-    </form>
-{% elif review_words.count %}
-    <form method="POST" action="{% url 'learn' r_word_num|add:1 %}">{% csrf_token %}
-        <div>
-            <label>{{ review_words|get_word:r_word_num }}</label>
-        </div>
-        <div>
-            <label>{{ review_words|get_def:r_word_num }}</label>
-        </div>
-        <div>
-            <button type="submit" value="{{ category }}" name="category">Next</button>
-        </div>
+        <p id="showinfo"></p>
     </form>
 {% else %}
-    <form action="{% url 'study' %}">{% csrf_token %}
-        <div>
-            <label>Congratulations! You have learned all the words</label>
-        </div>
-    </form>
-{% endif %}-->
-<form method="POST">{% csrf_token %}
-    {{ form.as_p }}
-</form>
+    <label>Study more words to review</label>
+    <button type="submit" formaction="{% url 'study' %}">Study</button>
+{% endif %}
+<script>
+    function checkAns() {
+        console.log("Inside check_Ans function");
+        var user_word = document.getElementById("word_txt").value;
+        document.getElementById("next").value = [user_word, "{{ category }}"];
+        showInfo = document.getElementById("showinfo");
+
+        if(!user_word.match(/^[A-Za-z]+$/)) {
+            showInfo.style.visibility = "visible";
+            showInfo.innerHTML = "Enter a Valid Word";
+            setTimeout(function(){hideInfo(showInfo)}, 3000); //hideInfo after 3sec
+        }
+        else {
+            console.log("Disable Text and Submit Button");
+            document.getElementById("word_txt").disabled = true;
+            document.getElementById("button").disabled = true;
+            document.getElementById("next").disabled = false;
+            console.log("Disabling done successfully");
+
+            if(user_word=="{% get_re_word review_words %}") {
+                document.getElementsByTagName("input")[1].style.background = "green";
+            }
+            else {
+                document.getElementsByTagName("input")[1].style.background = "red";
+                showInfo.style.visibility = "visible";
+                showInfo.innerHTML = "Correct ans: {% get_re_word review_words %}";
+                console.log("Showing info for 3 sec");
+                setTimeout(function(){hideInfo(showInfo)}, 3000); //hideInfo after 3sec
+                console.log("Info shown successfully");
+            }
+            console.log("Enabling Next Button");
+            document.getElementById("next").disabled = false;
+            console.log("Next Button enabled successfully");
+        }
+    }
+    function hideInfo(showInfo) {
+        console.log("Inside hideInfo function");
+        showInfo.style.visibility = "hidden";
+    }
+</script>
 {% endblock %}

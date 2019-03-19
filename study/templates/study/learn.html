@@ -1,31 +1,20 @@
 {% extends 'study/base.html' %}
 
 {% block content %}
-{% load mathfilters %}
 {% load studytags %}
+{% load learntags %}
+{% load mathfilters %}
 <h2>{{ category }}</h2>
-{% if l_word_num == learn_words.count %}
-    <form method="POST" action="{% url 'review' 0 %}">{% csrf_token %}
+{% if learn_words.count %}
+    <form method="POST" id="form_data">{% csrf_token %}
         <div>
-            <label>{{ learn_words|get_word:l_word_num }}</label>
+            <label>{{ learn_words|get_unl_def:l_word_num }}</label>
         </div>
         <div>
-            <label>{{ learn_words|get_def:l_word_num }}</label>
+            <label>{{ learn_words|get_unl_word:l_word_num }}</label>
         </div>
         <div>
-            <button type="submit" value="{{ category }}" name="category">Next</button>
-        </div>
-    </form>
-{% elif learn_words.count %}
-    <form method="POST" action="{% url 'learn' l_word_num|add:1 %}">{% csrf_token %}
-        <div>
-            <label>{{ learn_words|get_word:l_word_num }}</label>
-        </div>
-        <div>
-            <label>{{ learn_words|get_def:l_word_num }}</label>
-        </div>
-        <div>
-            <button type="submit" value="{{ category }}" name="category">Next</button>
+            <button onclick="goto_url()" value="{{ category }}" name="category">Next</button>
         </div>
     </form>
 {% else %}
@@ -35,4 +24,18 @@
         </div>
     </form>
 {% endif %}
+<script>
+    function goto_url() {
+        console.log("Inside goto_url function");
+        //console.log("inside url");
+        //when user comes to last i.e. 5th or less then 5th word
+        if({{ l_word_num }} == {{ learn_words.count }}) {
+            document.getElementById("form_data").action="{% url 'review' r_word_num|add:1 %}";
+        }
+        else {
+            document.getElementById("form_data").action="{% url 'learn' l_word_num|add:1 %}";
+        }
+    }
+
+</script>
 {% endblock %}
