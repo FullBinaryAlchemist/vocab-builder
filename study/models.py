@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -15,18 +14,27 @@ class List(models.Model):
         return self.list_type
 
 
+class WordListManager(models.Manager):
+
+    learn_q = 5
+
+    def get_words(self, username, list):
+        words_in_progress = Progress.objects.all().filter(user__username=username, word_id__word_id__contains=list).values_list('word_id__word', flat=True)
+        get_words = self.filter(word_id__contains=list)
+        return get_words.exclude(word__in=words_in_progress)[:self.learn_q]
+
+
 class WordList(models.Model):
     word = models.CharField(max_length=30)
     definition = models.CharField(max_length=200)
     word_id = models.CharField(max_length=100, primary_key=True)
+    objects = WordListManager()
 
     def __str__(self):
         return self.word_id
 
 
 class ProgressManager(models.Manager):
-
-    learn_q = 5
 
     def get_lwords(self, user_name, list):
         # print(user_name, list)
@@ -41,13 +49,6 @@ class ProgressManager(models.Manager):
         b = models.Q(user__username=user_name)
         c = models.Q(learned=False)
         return self.filter(a & b & c).filter(interval__lte=current_time())
-
-    def get_unwords(self, user_name, list):
-        review_words = self.get_review_words(user_name, list).values_list('word_id__word', flat=True)
-        l_words = self.get_lwords(user_name, list).values_list('word_id__word', flat=True)
-        wordlist_words = WordList.objects.filter(word_id__contains=list)
-        unl_words = wordlist_words.exclude(word__in=review_words.union(l_words))[:self.learn_q]
-        return unl_words
 
     def get_total_words_count(self, list):
         return self.filter(word_id__word_id__contains=list).count()
@@ -70,6 +71,16 @@ class Progress(models.Model):
 
     def __str__(self):
         return str((self.word_id, self.learned, self.correct, self.wrong))
+
+
+class CurrentWord(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    current_lword_no = models.IntegerField(default=0)
+    current_rword_no = models.IntegerField(default=0)
+    category = models.CharField(max_length=10)
+
+    def __str__(self):
+        return str((self.category, self.current_lword_no, self.current_rword_no))
 
 
 # Assigns an id to the test
