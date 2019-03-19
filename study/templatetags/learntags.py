@@ -10,3 +10,5 @@ def get_unl_word(words, word_num):  # words = learn_words
 @register.filter(name='get_unl_def')
 def get_unl_def(words, word_num):  # words = learn_words
     return words[word_num-1].definition
+
+
