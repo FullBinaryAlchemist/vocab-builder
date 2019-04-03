@@ -5,7 +5,7 @@ from django.urls import include
 from study import urls
 from dashboard import urls as dashboard_urls
 from testmode import urls as testmode_urls
-from register import views as register_urls
+from register import urls as register_urls
 
 
 urlpatterns = [
@@ -17,6 +17,6 @@ urlpatterns = [
 
     path('test/',include(testmode_urls)),
 
-    path('Sign Up/',include(register_urls)),
+    path('signup/',include(register_urls)),
 
 ]
