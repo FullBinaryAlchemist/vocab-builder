@@ -1,0 +1,15 @@
+{% extends "./base.html" %}
+
+{% block content %}
+	<h3>Test  </h3>
+	
+	<form method="POST" class="answer-form">{% csrf_token %}
+		
+		{% for question in test_questions%}
+		<label for="{{question}}">{{question}}</label><br>
+		<label><input type="radio" name="{{question}}" value="{{question}}">{{question.definition}}</label>
+		{% endfor %}
+		<button type="submit">ANSWER</button>
+	</form>
+	
+{% endblock %}
