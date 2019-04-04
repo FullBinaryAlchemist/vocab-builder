@@ -7,7 +7,10 @@ urlpatterns = [
 
     path('', views.landing, name='landing'),
     path('study/learn/', views.tostudy, name='tostudy'),
+    path('study/go_learn/', views.go_learn, name='go_learn'),
+
     path('study/review/', views.tostudy, name='tostudy'),
+    path('study/go_review/', views.go_review, name='go_review'),
     path('study/', views.study, name='study'),
 
     # vocabuilder/study/learn/l_word_num/

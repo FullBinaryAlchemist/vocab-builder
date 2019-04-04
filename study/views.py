@@ -53,7 +53,6 @@ def study(request):
     username = request.user.username
     # get learning word number
     if CurrentWord.objects.all().count() < categories.count():
-        # print("hoo")
         for category in categories:
             print(category)
             CurrentWord.objects.create(user=request.user, category=category)
@@ -71,6 +70,37 @@ def study(request):
         'categories': categories, 'username': username, 'l_word_nums': l_word_nums, 'r_word_num': r_word_num,
     }
     return render(request, 'study/study.html', context)
+
+
+def go_learn(request):
+    categories = List.objects.all()
+    username = request.user.username
+    if CurrentWord.objects.all().count() < categories.count():
+        for category in categories:
+            print(category)
+            CurrentWord.objects.create(user=request.user, category=category)
+    l_word_nums = CurrentWord.objects.filter(user=request.user)
+    for category in categories:
+        save_num(request.user, category, 0, 'learn')
+    context = {
+        'categories': categories, 'username': username, 'l_word_nums': l_word_nums,
+    }
+    return render(request, 'study/go_learn.html', context)
+
+
+def go_review(request):
+    categories = List.objects.all()
+    username = request.user.username
+
+    # initializing review word num and learn word num to 0
+    for category in categories:
+        save_num(request.user, category, 0, 'review')
+    r_word_num = 0
+
+    context = {
+        'categories': categories, 'username': username, 'r_word_num': r_word_num,
+    }
+    return render(request, 'study/go_review.html', context)
 
 
 def learn(request, l_word_num):
