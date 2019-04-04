@@ -14,6 +14,7 @@
         <div>
             <button type="button" value="" id="button" onclick="checkAns();">Submit</button>
             <button onclick="goto_url()" name="user_word_data" value="" id="next" disabled>Next</button>
+
         </div>
         <p id="showinfo"></p>
     </form>
@@ -51,6 +52,7 @@
     function checkAns() {
         console.log("Inside check_Ans function");
         var user_word = document.getElementById("word_txt").value;
+
         showInfo = document.getElementById("showinfo");
 
         if(!user_word.match(/^[A-Za-z]+$/)) {

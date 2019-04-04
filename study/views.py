@@ -218,6 +218,7 @@ def review(request, r_word_num):
                 'review_words': review_words, 'category': category, 'r_word_num': r_word_num,
             }
             return render(request, 'study/review.html', context)
+
     else:
         return redirect('study')
 
