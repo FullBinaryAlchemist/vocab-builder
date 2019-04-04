@@ -1,0 +1,69 @@
+{% extends 'study/base.html' %}
+
+{% load studytags mathfilters %}
+{% block content %}
+<div class="study-content flex-grow-1">
+    <form method="POST" id="form_data" action="{% url 'study' %}">{% csrf_token %}
+        <div class="table-responsive-md table-hover">
+            <table class="table table-lg">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="category">Category</th>
+                        <th class="review">Review</th>
+                        <th class="tot-progress">Progress</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td class="categories">{{ category }}</td>
+                            <td class="tot-review-que">{% get_tot_rewords username category %}</td>
+                            <td class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_learn('{{ category }}')">Learn</button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+<script>
+    function can_learn(cate_gory) {
+        console.log("Inside can_learn function");
+        {% for category in categories %}
+            if(cate_gory == "{{ category }}") {
+                console.log("Chosen category:"+cate_gory);
+                if(({% get_tot_words category %} - {% get_tot_lwords username category %})==0) {
+                    //display a message
+                    console.log("No words to learn");
+                    document.getElementById("form_data").action = "{% url 'study' %}";
+                }
+                else {
+                    document.getElementById("form_data").action="{% url 'learn' l_word_nums|get_lword_num:category %}";
+                }
+
+            }
+        {% endfor %}
+    }
+    function can_review(cate_gory) {
+        console.log("Inside can_review function");
+        {% for category in categories %}
+            if(cate_gory == "{{ category }}") {
+                 console.log("Chosen category:"+cate_gory);
+                 if({% get_tot_rewords username category %}==0) {
+                    //display a message
+                    console.log("No words to review");
+                    document.getElementById("form_data").action = "{% url 'study' %}";
+                 }
+                 else {
+                     document.getElementById("form_data").action = "{% url 'review' r_word_num|add:1 %}";
+                 }
+            }
+        {% endfor %}
+    }
+</script>
+{% endblock %}
