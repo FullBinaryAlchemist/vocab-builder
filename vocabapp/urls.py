@@ -14,9 +14,10 @@ urlpatterns = [
     path('dashboard/', include(dashboard_urls)),
     # 'vocabuilder/'
     path('vocabuilder/', include(urls)),
+    path('', include(urls)),
 
     path('test/', include(testmode_urls)),
 
-    path('signup/',include(register_urls)),
+    path('signup/',include(register_urls, namespace="register")),
 
 ]
