@@ -4,9 +4,10 @@
 {% load studytags %}
 {% load learntags %}
 {% load mathfilters %}
-<h2>{{ category }}</h2>
+
+<body onload="set_form_meth();" onunload="check_meth();">
 {% if learn_words.count %}
-    <form method="POST" id="form_data">{% csrf_token %}
+    <form id="form_data" class="form">{% csrf_token %}
         <div>
             <label>{{ learn_words|get_unl_def:l_word_num }}</label>
         </div>
@@ -14,7 +15,8 @@
             <label>{{ learn_words|get_unl_word:l_word_num }}</label>
         </div>
         <div>
-            <button onclick="goto_url()" value="{{ category }}" name="category">Next</button>
+            <button onclick="goto_url()" value="{{ category }}" name="category" class="btn btn-primary btn-lg btn-block">Next</button>
+            <input type="hidden" id="goback" value="no">
         </div>
     </form>
 {% else %}
@@ -24,18 +26,41 @@
         </div>
     </form>
 {% endif %}
+</body>
 <script>
-    function goto_url() {
-        console.log("Inside goto_url function");
-        //console.log("inside url");
-        //when user comes to last i.e. 5th or less then 5th word
-        if({{ l_word_num }} == {{ learn_words.count }}) {
-            document.getElementById("form_data").action="{% url 'review' r_word_num|add:1 %}";
+    function set_form_meth() {console.log("{{ l_word_num }}");
+        console.log("inside set_form_meth func");
+        document.getElementById("form_data").method = "GET";
+        console.log(document.getElementById("goback").value);
+        window.history.forward();
+    }
+    function check_meth() {console.log("{{ l_word_num }}");
+        console.log("inside check_meth func");
+        console.log(document.getElementById("form_data").method);
+        if(document.getElementById("form_data").method == "get") {
+            console.log("method:get");
+            console.log(document.getElementById("goback").value);
+            console.log("l_word_num is:"+"{{ l_word_num }}");
+            if(document.getElementById("goback").value == "yes" || {{ l_word_num }} == 1) {
+                console.log("l_word_num is:"+"{{ l_word_num }}");
+                location.href = "{% url 'study' %}"
+            }
         }
-        else {
-            document.getElementById("form_data").action="{% url 'learn' l_word_num|add:1 %}";
+        if(document.getElementById("form_data").method == "post") {
+            console.log("method:post");
         }
     }
-
+    function goto_url() {
+        console.log("Inside goto_url function");
+        document.getElementById("goback").value = "yes";
+        document.getElementById("form_data").method = "POST";
+        //when user comes to last i.e. 5th or less then 5th word
+        if({{ l_word_num }} == {{ learn_words.count }}) {
+            document.getElementById("form_data").action="{% url 'review' r_word_num|add:1 %}"+"?category="+"{{ category }}";
+        }
+        else {
+            document.getElementById("form_data").action="{% url 'learn' l_word_num|add:1 %}"+"?category="+"{{ category }}";
+        }
+    }
 </script>
 {% endblock %}

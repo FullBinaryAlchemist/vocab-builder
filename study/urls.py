@@ -4,7 +4,8 @@ from . import views
 urlpatterns = [
 
     # vocabuilder/ or vocabuilder/study
-    path('', views.tostudy, name='tostudy'),
+
+    path('', views.landing, name='landing'),
     path('study/learn/', views.tostudy, name='tostudy'),
     path('study/review/', views.tostudy, name='tostudy'),
     path('study/', views.study, name='study'),

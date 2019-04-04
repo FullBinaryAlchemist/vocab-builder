@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
 <head>
-	<title>Vocabulary Builder</title>
 
-	<meta charset="utf-8">
+    <title>Vocabulary Builder</title>
+
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Latest compiled and minified CSS -->
@@ -28,71 +28,17 @@
 	<!--Google icons-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<link rel="stylesheet" href="{% static 'css/study.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 </head>
-
-<div style="float: left;">
-	<div class="wrapper">
-		<!-- Sidebar -->
-		<nav id="sidebar" class="bg-dark">
-			<div class="sidebar-header bg-secondary">
-				<h3>Vocabulary Builder</h3>
-				<strong>VB</strong>
-			</div>
-			<ul class="list-unstyled components">
-				<li class="">
-					<a href="#studySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-						<i class="fas fa-book-open mr-2 fa-lg"></i>
-						<label>Study</label>
-					</a>
-					<ul class="collapse list-unstyled" id="studySubmenu">
-						<li>
-							<a href="#">Learn</a>
-						</li>
-						<li>
-							<a href="#">Review</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<i class="fas fa-book mr-2 fa-lg"></i>
-						<label>Test</label>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="glyphicon glyphicon-dashboard mr-2 glyphicon-globe fa-lg"></i>
-						<label>DashBoard</label>
-					</a>
-				</li>
-				<!--<li>
-					<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-						<i class="fas fa-copy"></i>
-						Pages
-					</a>
-					<ul class="collapse list-unstyled" id="pageSubmenu">
-						<li>
-							<a href="#">Page 1</a>
-						</li>
-						<li>
-							<a href="#">Page 2</a>
-						</li>
-						<li>
-							<a href="#">Page 3</a>
-						</li>
-					</ul>
-				</li>-->
-			</ul>
-		</nav>
-	</div>
-</div>
-
+<body>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 
 	<button type="button" id="sidebarCollapse" class="navbar-btn btn-outline-light btn-dark">
 		<i class="fas fa-bars"></i>
 	</button>
+
 	<!--Brand-->
 	<a class="navbar-brand ml-2" href="#"  style="padding: 19px 20px;">Logo</a>
 
@@ -103,7 +49,7 @@
 
 	<!--Navbar Links-->
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
-		<ul class="navbar-nav">
+		<ul class="navbar-nav" id="left-nav-content">
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbardrop">Study</a>
 				<div class="dropdown-menu">
@@ -119,31 +65,75 @@
 			</li>
 		</ul>
 	</div>
+    <div class="right:0">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Login</a>
+            </li>
+            <li class="nav-item">
+                <span class="navbar-text"> | </span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">SignUp</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
-<div class="d-flex">
-{% block content %}
-{% endblock %}
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li class="item1 active"></li>
+    <li class="item2"></li>
+    <li class="item3"></li>
+    <li class="item4"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active" id="img1">
+      <img src="{% static 'images/vocab1.png' %}" alt="Welcome to Vocab-Builder">
+    </div>
+    <div class="carousel-item" id="img2">
+      <img src="{% static 'images/vocab2.png' %}" alt="Enhance your learning with the FREE VOCAB-BUILDER">
+    </div>
+    <div class="carousel-item" id="img3">
+      <img src="{% static 'images/vocab3.png' %}" alt="Learn 2000+ words and test yourself">
+    </div>
+    <div class="carousel-item" id="img4">
+      <img src="{% static 'images/vocab4.png' %}" alt="Start your free learning">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
 </div>
+</body>
 <script>
+$(document).ready(function(){
+  // Activate the Carousel. Pause it when you move the mouse over it
+  $("#myCarousel").carousel({interval: 500, pause: "hover"});
 
-$(document).ready(function () {
-
-    $("#sidebar").mCustomScrollbar({
-         theme: "minimal"
-    });
-
-    $('#sidebarCollapse').on('click', function () {
-        // open or close sidebar
-        $('#sidebar').toggleClass('active');
-        // close dropdowns
-        $('.collapse.in').toggleClass('in');
-        // and also adjust aria-expanded attributes we use for the open/closed arrows
-        // in our CSS
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-    });
-
+  // Enable Carousel Indicators
+  $(".item1").click(function(){
+    $("#myCarousel").carousel(0);
+  });
+  $(".item2").click(function(){
+    $("#myCarousel").carousel(1);
+  });
+  $(".item3").click(function(){
+    $("#myCarousel").carousel(2);
+  });
+  $(".item4").click(function(){
+    $("#myCarousel").carousel(4);
+  });
 });
-
 </script>
 </html>

@@ -1,24 +1,35 @@
 {% extends 'study/base.html' %}
 
-{% block content %}
 {% load studytags mathfilters %}
-<form method="POST" id="form_data" action="{% url 'study' %}">{% csrf_token %}
-
-<label class="category"><strong>Category</strong></label>
-<label class="review"><strong>Review</strong></label>
-<label class="progress"><strong>Progress</strong></label><br><br>
-
-{% for category in categories %}
-    <label class="categories">{{ category }}</label>
-    <label class="tot-review-que">{% get_tot_rewords username category %}</label>
-    <label class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</label>
-    <button name="category" type="submit" class="review-btn" value="{{ category }}" onclick="can_review('{{ category }}')">Review</button>
-    <button name="category" type="submit" class="learn-btn" value="{{ category }}" onclick="can_learn('{{ category }}')">Learn</button>
-    <br>
-
-{% endfor %}
-
-</form>
+{% block content %}
+<div class="study-content flex-grow-1">
+    <form method="POST" id="form_data" action="{% url 'study' %}">{% csrf_token %}
+        <div class="table-responsive-md table-hover">
+            <table class="table table-lg">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="category">Category</th>
+                        <th class="review">Review</th>
+                        <th class="tot-progress">Progress</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td class="categories">{{ category }}</td>
+                            <td class="tot-review-que">{% get_tot_rewords username category %}</td>
+                            <td class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_learn('{{ category }}')">Learn</button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
 
 <script>
     function can_learn(cate_gory) {

@@ -1,17 +1,20 @@
 {% extends 'study/base.html' %}
 
 {% block content %}
+
+<body onload="set_form_meth();disable_next_btn();checkAns();" onunload="check_meth();" id="body">
 {% load reviewtags mathfilters %}
 <h2>Review</h2>
 {% if review_words.count %}
-    <form method="POST" id="form_data" action="{% url 'review' r_word_num|add:1 %}">{% csrf_token %}
+    <form method="" id="form_data">{% csrf_token %}
         <div>
             <label>{% get_re_def review_words %}</label>
         </div>
-            <input type="text" value="" id="word_txt">
+            <input type="text" value="" id="word_txt" name="word_txt">
         <div>
-            <button type="button" value="" id="button" onclick="checkAns()">Submit</button>
-            <button type="submit" name="user_word_data" value="" id="next" disabled>Next</button>
+            <button type="button" value="" id="button" onclick="checkAns();">Submit</button>
+            <button onclick="goto_url()" name="user_word_data" value="" id="next" disabled>Next</button>
+
         </div>
         <p id="showinfo"></p>
     </form>
@@ -19,11 +22,37 @@
     <label>Study more words to review</label>
     <button type="submit" formaction="{% url 'study' %}">Study</button>
 {% endif %}
+<input type="hidden" id="goback" value="no">
+</body>
 <script>
+    function disable_next_btn() {
+        document.getElementById("next").disabled = true;
+    }
+    function set_form_meth() {
+        console.log("inside set_form_meth func");
+        document.getElementById("form_data").method = "GET";
+        console.log(document.getElementById("goback").value);
+        window.history.forward();
+    }
+    function check_meth() {
+        console.log("inside check_meth func");
+        console.log(document.getElementById("form_data").method);
+        if(document.getElementById("form_data").method == "get") {
+            console.log("method:get");
+            console.log(document.getElementById("goback").value);
+            if(document.getElementById("goback").value == "yes") {
+                console.log("im in");
+                location.href="{% url 'study' %}";
+            }
+        }
+        if(document.getElementById("form_data").method == "post") {
+            console.log("method:post");
+        }
+    }
     function checkAns() {
         console.log("Inside check_Ans function");
         var user_word = document.getElementById("word_txt").value;
-        document.getElementById("next").value = [user_word, "{{ category }}"];
+
         showInfo = document.getElementById("showinfo");
 
         if(!user_word.match(/^[A-Za-z]+$/)) {
@@ -57,6 +86,14 @@
     function hideInfo(showInfo) {
         console.log("Inside hideInfo function");
         showInfo.style.visibility = "hidden";
+    }
+    function goto_url() {
+        console.log("Inside goto_url function");
+        var user_word = document.getElementById("word_txt").value;
+        document.getElementById("next").value = [user_word, "{{ category }}"];
+        document.getElementById("goback").value = "yes"
+        document.getElementById("form_data").method = "POST";
+        document.getElementById("form_data").action = "{% url 'review' r_word_num|add:1 %}"+"?category="+"{{ category }}";
     }
 </script>
 {% endblock %}

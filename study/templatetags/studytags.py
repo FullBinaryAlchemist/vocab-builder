@@ -19,7 +19,9 @@ def get_tot_rewords(username, cat):
 
 @register.filter(name='get_lword_num')
 def get_lword_num(l_word_nums, category):
-    print(category)
+
+    # print(category)
+
     l_word_num = l_word_nums.get(category=category).current_lword_no
     if l_word_num:
         return l_word_num
