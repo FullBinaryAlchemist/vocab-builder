@@ -6,12 +6,13 @@
 {% load mathfilters %}
 
 <body onload="set_form_meth();" onunload="check_meth();">
+<div  class="container-fluid justify-content-center" style="margin: 40px 50px;padding:10px 10px;border:solid red 1px;">
 {% if learn_words.count %}
     <form id="form_data" class="form">{% csrf_token %}
-        <div>
+        <div class="d-flex bg-dark display-2">
             <label>{{ learn_words|get_unl_def:l_word_num }}</label>
         </div>
-        <div>
+        <div class="d-flex bg-secondary display-3">
             <label>{{ learn_words|get_unl_word:l_word_num }}</label>
         </div>
         <div>
@@ -26,6 +27,7 @@
         </div>
     </form>
 {% endif %}
+</div>
 </body>
 <script>
     function set_form_meth() {console.log("{{ l_word_num }}");
