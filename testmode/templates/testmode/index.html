@@ -1,0 +1,21 @@
+{%extends './base.html' %}
+
+{%block content%}
+	<h2>TEST</h2>
+	{% if lists %}
+		<table>
+				<tr>
+					<th>Name</th>
+
+				</tr>
+			{%for list in lists%}
+				<tr>
+					<td>{{list.name}}</td>
+					<td><a href="#"><button>Take Test</button></a></td>
+				</tr>
+			{%endfor%}
+		</table>
+	{%else%}
+		<i>There are no words available for testing right now. <br>
+			Please learn more words from <a href="#">Study</a>
+{%endblock%}
