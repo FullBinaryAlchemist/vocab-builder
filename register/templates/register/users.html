@@ -1,3 +1,9 @@
+{% extends "register/base.html" %}
+
+{%block title%}
+    <title>Sign Up</title>
+{% endblock %}
+
 <div class="col-md-8">
           {% if messages %}
             {% for message in messages %}
@@ -22,7 +28,7 @@
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
             </small>
         </div>
     </div>
