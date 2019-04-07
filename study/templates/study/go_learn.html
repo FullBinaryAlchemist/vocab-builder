@@ -4,9 +4,9 @@
 {% block content %}
 <div class="study-content flex-grow-1">
     <form method="POST" id="form_data" action="{% url 'study' %}">{% csrf_token %}
-        <div class="table-responsive-md table-hover">
+        <div class="table-responsive-md">
             <table class="table table-lg">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <tr>
                         <th class="category">Category</th>
                         <th class="tot-progress">Progress</th>
@@ -14,7 +14,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-light">
                     {% for category in categories %}
                         <tr>
                             <td class="categories">{{ category }}</td>

@@ -35,12 +35,14 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-expand-sm bg-dark navbar-dark sticky-top">
 
-	<button type="button" id="sidebarCollapse" class="navbar-btn btn-outline-light btn-dark">
+	<!--<button type="button" id="sidebarCollapse" class="navbar-btn btn-outline-light btn-dark">
 		<i class="fas fa-bars"></i>
-	</button>
+	</button>-->
 
 	<!--Brand-->
-	<a class="navbar-brand ml-2" href="#"  style="padding: 19px 20px;">Logo</a>
+	<a class="navbar-brand ml-2" href="#"  style="padding: 5px 5px;width:100px;">
+        <img class="img-fluid rounded-circle" src="{% static 'images/logo.png'%}" alt="Vocabulary Builder">
+    </a>
 
 	<!--Toggler/collapsible button-->
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -48,9 +50,9 @@
 	</button>
 
 	<!--Navbar Links-->
-	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+	<div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
 		<ul class="navbar-nav" id="left-nav-content">
-			<li class="nav-item dropdown">
+			<!--<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbardrop">Study</a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#">Learn</a>
@@ -62,22 +64,14 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">DashBoard</a>
-			</li>
-		</ul>
-	</div>
-    <div class="right:0">
-        <ul class="navbar-nav">
+			</li>-->
             <li class="nav-item">
                 <a class="nav-link" href="#">Login</a>
             </li>
             <li class="nav-item">
-                <span class="navbar-text"> | </span>
-            </li>
-            <li class="nav-item">
-
                 <a class="nav-link" href="{% url 'register:signup' %}">SignUp</a>
             </li>
-        </ul>
+		</ul>
     </div>
 </nav>
 

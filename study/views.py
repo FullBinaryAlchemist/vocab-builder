@@ -183,7 +183,7 @@ def check_ans(user, category, user_word):
         review_words = Progress.objects.get_review_words(user.username, category).filter(correct__lt=3).order_by('correct', 'wrong')
         print(review_words)
         word = review_words[0].word_id.word
-        if user_word == word:
+        if user_word.lower() == word.lower():
             is_correct = True
         else:
             is_correct = False
