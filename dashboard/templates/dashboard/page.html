@@ -1,19 +1,72 @@
-{% extends "./base.html" %}
-{% load dashboard_tags %}
+{% extends 'study/base.html' %}
+
+{% load studytags mathfilters %}
 {% block content %}
-	<h3 align="center">PROGRESS</h3>
-	<div id="progress">
-		{%for list in lists %}
-			{% show_progress user list.list_type %}
-		{% endfor %}
+<div class="study-content flex-grow-1" style="background:white;margin:40px;">
+	<h1 align="center">PROGRESS</h1><br><br>
+	<div class="table-responsive-md table-responsive-sm table-hover">
+		<table class="table table-lg">
+			<thead class="thead-dark">
+				<tr>
+					<th class="category">Category</th>
+					<th class="review">Review</th>
+					<th class="tot-progress">Progress</th>
+				</tr>
+			</thead>
+			<tbody class="bg-secondary text-light">
+				{% for category in categories %}
+					<tr>
+						<td class="categories">{{ category }}</td>
+						<td class="tot-review-que">{% get_tot_rewords username category %}</td>
+						<td class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
-	<!--TO-DO-->
-	<div id="study-history"></div>
-	<!--TO-DO-->
-	<h3 align="center">TESTS</h3>
-	<div id="test-history">
-		{%for test in tests %}
-			{% show_test_history user test %}
-		{% endfor %}
-	</div>
-{% endblock content %}
+
+	<br><br>
+
+	 <div id="accordion">
+
+	  <div class="card">
+		<div class="card-header">
+		  <a class="card-link" data-toggle="collapse" href="#collapseOne">
+			Study
+		  </a>
+		</div>
+		<div id="collapseOne" class="collapse show" data-parent="#accordion">
+		  <div class="card-body">
+			  <p></p>
+		  </div>
+		</div>
+	  </div>
+
+	  <div class="card">
+		<div class="card-header">
+		  <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+			Learn
+		  </a>
+		</div>
+		<div id="collapseTwo" class="collapse" data-parent="#accordion">
+		  <div class="card-body">
+			  <p></p>
+		  </div>
+		</div>
+	  </div>
+
+	  <div class="card">
+		<div class="card-header">
+		  <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+			Review
+		  </a>
+		</div>
+		<div id="collapseThree" class="collapse" data-parent="#accordion">
+		  <div class="card-body">
+			<p></p>
+		  </div>
+		</div>
+	  </div>
+	 </div>
+</div>
+{% endblock %}
