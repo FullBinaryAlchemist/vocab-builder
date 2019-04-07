@@ -1,28 +1,43 @@
 {% extends 'study/base.html' %}
 
 {% block content %}
-
-<body onload="set_form_meth();disable_next_btn();" onunload="check_meth();" id="body">
 {% load reviewtags mathfilters %}
-<h2>Review</h2>
+<body onload="set_form_meth();disable_next_btn();" onunload="check_meth();" id="body">
+<div  class="container-fluid justify-content-center p-0 m-0">
 {% if review_words.count %}
     <form method="" id="form_data">{% csrf_token %}
-        <div>
-            <label>{% get_re_def review_words %}</label>
+        <div class="p-0" style="height:400px;">
+            <div class="d-flex text-dark display-3 p-5 m-t-5 m-b-4 justify-content-center"  style="height:200px;">
+                <label>{% get_re_def review_words %}</label>
+            </div>
+            <div class="d-flex display-4 p-2 m-5 justify-content-center">
+                <input type="text" value="" id="word_txt" name="word_txt" autofocus style="width:100%;height:60px;text-align:center">
+            </div>
+            <div class="btn-group btn-group-lg  w-100">
+                <button class="btn btn-primary" type="button" value="" id="button" onclick="checkAns();">
+                    <label class="display-4">Submit</label>
+                </button>
+                <button class="btn btn-primary" onclick="goto_url()" name="user_word_data" value="" id="next" disabled>
+                    <label class="display-4">Next</label>
+                </button>
+            </div>
+            <div class="alert alert-warning display-4" style="display:none;" id="showinfo-warn">
+                <p style="text-align:center"><strong>Invalid word! </strong>Enter a valid word</p>
+            </div>
+            <div class="alert alert-danger display-4" style="display:none;" id="showinfo-danger">
+                <p style="text-align:center"><strong>Wrong Answer! </strong>Correct answer is <strong>{% get_re_word review_words %}</strong></p>
+            </div>
+            <div class="alert alert-success display-4" style="display:none;" id="showinfo-success">
+                <p style="text-align:center"><strong>Well Done! </strong>Keep it up</p>
+            </div>
         </div>
-            <input type="text" value="" id="word_txt" name="word_txt">
-        <div>
-            <button type="button" value="" id="button" onclick="checkAns();">Submit</button>
-            <button onclick="goto_url()" name="user_word_data" value="" id="next" disabled>Next</button>
-
-        </div>
-        <p id="showinfo"></p>
     </form>
 {% else %}
     <label>Study more words to review</label>
     <button type="submit" formaction="{% url 'study' %}">Study</button>
 {% endif %}
 <input type="hidden" id="goback" value="no">
+</div>
 </body>
 <script>
     function disable_next_btn() {
@@ -53,11 +68,9 @@
         console.log("Inside check_Ans function");
         var user_word = document.getElementById("word_txt").value;
 
-        showInfo = document.getElementById("showinfo");
-
         if(!user_word.match(/^[A-Za-z]+$/)) {
-            showInfo.style.visibility = "visible";
-            showInfo.innerHTML = "Enter a Valid Word";
+            showInfo = document.getElementById("showinfo-warn");
+            showInfo.style.display = "block";
             setTimeout(function(){hideInfo(showInfo)}, 3000); //hideInfo after 3sec
         }
         else {
@@ -68,12 +81,14 @@
             console.log("Disabling done successfully");
 
             if(user_word.toLowerCase()=="{% get_re_word review_words %}") {
+                showInfo = document.getElementById("showinfo-success");
+                showInfo.style.display = "block";
                 document.getElementsByTagName("input")[1].style.background = "green";
             }
             else {
+                showInfo = document.getElementById("showinfo-danger");
                 document.getElementsByTagName("input")[1].style.background = "red";
-                showInfo.style.visibility = "visible";
-                showInfo.innerHTML = "Correct ans: {% get_re_word review_words %}";
+                showInfo.style.display = "block";
                 console.log("Showing info for 3 sec");
                 setTimeout(function(){hideInfo(showInfo)}, 3000); //hideInfo after 3sec
                 console.log("Info shown successfully");
@@ -85,7 +100,7 @@
     }
     function hideInfo(showInfo) {
         console.log("Inside hideInfo function");
-        showInfo.style.visibility = "hidden";
+        showInfo.style.display = "none";
     }
     function goto_url() {
         console.log("Inside goto_url function");
