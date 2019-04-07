@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from register import urls
 urlpatterns = [
 
     # vocabuilder/ or vocabuilder/study
