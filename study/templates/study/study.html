@@ -21,8 +21,8 @@
                             <td class="categories">{{ category }}</td>
                             <td class="tot-review-que">{% get_tot_rewords username category %}</td>
                             <td class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</td>
-                            <td><button name="category" type="submit" class="learn-btn btn btn-outline-primary btn-lg" value="{{ category }}" id="review{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
-                            <td><button name="category" type="submit" class="review-btn btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_learn('{{ category }}')">Learn</button></td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" id="review{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_learn('{{ category }}')">Learn</button></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -31,7 +31,7 @@
     </form>
 </div>
 
-<div class="modal" id="myModal">
+<div class="modal fade" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 

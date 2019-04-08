@@ -20,7 +20,7 @@
                             <td class="categories">{{ category }}</td>
                             <td class="tot-review-que">{% get_tot_rewords username category %}</td>
                             <td class="words-learned">{% get_tot_lwords username category %}/{% get_tot_words category %}</td>
-                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
+                            <td><button name="category" type="submit" class="btn btn-outline-primary btn-lg" value="{{ category }}" id="review{{ category }}" onclick="can_review('{{ category }}')">Review</button></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -28,6 +28,29 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Cannot Review</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        You have no words to review. Learn some words or come after sometime.
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
     function can_review(cate_gory) {
@@ -38,7 +61,10 @@
                  if({% get_tot_rewords username category %}==0) {
                     //display a message
                     console.log("No words to review");
-                    document.getElementById("form_data").action = "{% url 'study' %}";
+
+                    $("#myModal").modal();
+
+                    document.getElementById('review{{category}}').type = "button";
                  }
                  else {
                      document.getElementById("form_data").action = "{% url 'review' r_word_num|add:1 %}";
