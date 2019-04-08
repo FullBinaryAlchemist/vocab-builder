@@ -53,7 +53,7 @@ def study(request):
     # get user
     username = request.user.username
     # get learning word number
-    if CurrentWord.objects.all().count() < categories.count():
+    if CurrentWord.objects.filter(user=request.user).all().count() < categories.count():
         for category in categories:
             print(category)
             CurrentWord.objects.create(user=request.user, category=category)
