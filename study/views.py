@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import timedelta
 from .models import *
 import os
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -44,7 +45,7 @@ def save_num(user, category, wordnum, mode):
         word_num.current_rword_no = wordnum
         word_num.save()
 
-
+@login_required(login_url = '/login/')
 def study(request):
     print("Inside study")
     # get all categories
@@ -71,7 +72,7 @@ def study(request):
     }
     return render(request, 'study/study.html', context)
 
-
+@login_required(login_url = '/login/')
 def go_learn(request):
     categories = List.objects.all()
     username = request.user.username
@@ -87,7 +88,7 @@ def go_learn(request):
     }
     return render(request, 'study/go_learn.html', context)
 
-
+@login_required(login_url = '/login/')
 def go_review(request):
     categories = List.objects.all()
     username = request.user.username
@@ -102,7 +103,7 @@ def go_review(request):
     }
     return render(request, 'study/go_review.html', context)
 
-
+@login_required(login_url = '/login/')
 def learn(request, l_word_num):
 
     print("Inside learn")
@@ -194,7 +195,7 @@ def check_ans(user, category, user_word):
             word_num.current_rword_no = 0
             word_num.save()
 
-
+@login_required(login_url = '/login/')
 def review(request, r_word_num):
     if request.method == 'POST':
 
