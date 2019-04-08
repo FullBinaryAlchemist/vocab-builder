@@ -14,6 +14,7 @@ def register(request):
             paswd = form.cleaned_data.get('password1')
             print(username, paswd)
             messages.success(request, f'Account created for {username}!')
+            # messages.success(request, 'Account created for ' + username + '!')
             return redirect('register:signup')
     else:
         form = UserRegisterForm()
