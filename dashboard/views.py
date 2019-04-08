@@ -3,9 +3,11 @@ from study.models import *
 from dashboard.models import *
 from testmode.views import info
 from testmode.urls import *
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url = '/login/')
 def dashboard_view(request):
     """lists = List.objects.all()
     tests = Tests.objects.filter(test_data__user=request.user).order_by("-test_date")[:5]
