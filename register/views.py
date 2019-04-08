@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm
 from register import urls
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -10,6 +11,8 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            paswd = form.cleaned_data.get('password1')
+            print(username, paswd)
             # messages.success(request, f'Account created for {username}!')
             return redirect('register:signup')
     else:

@@ -3,7 +3,7 @@ div.container-fluid {
 
 }
 
-#word-def {
+/*#word-def {
     border: solid black 5px;
     background-image: linear-gradient(#0f0c29, #302b63, #24243e);
 }
@@ -11,7 +11,7 @@ div.container-fluid {
 #word {
     background-image: linear-gradient(#000428, #004e92);
 }
-
+*/
 body {
     /*background-image: linear-gradient(#0F2027, #203A43, #2C5364);*/
     /*background-image: linear-gradient(#0f0c29, #302b63, #24243e);*/
