@@ -76,7 +76,7 @@ def study(request):
 def go_learn(request):
     categories = List.objects.all()
     username = request.user.username
-    if CurrentWord.objects.all().count() < categories.count():
+    if CurrentWord.objects.filter(user=request.user).all().count() < categories.count():
         for category in categories:
             print(category)
             CurrentWord.objects.create(user=request.user, category=category)
